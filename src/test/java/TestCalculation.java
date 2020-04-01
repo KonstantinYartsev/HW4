@@ -1,26 +1,76 @@
-import Constants.CalculationConstants;
+import Constants.TestCalculatorLocalesData;
 import HW3.Calculation;
 import HW3.MyException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
 
 public class TestCalculation {
-    @Test(expectedExceptions = MyException.class)
-    public static void testCalculation() throws MyException {
-        String s = "Метод countElementsInMap класса Map работает без ошибок\n";
 
-        for (CalculationConstants t : CalculationConstants.values()) {
-            System.out.printf("//Исходные данные: %.2f || Ожидаемый результат: %.0f%n",
-                    t.getTestSalary(), t.getExpectedDiscount());
-            Assert.assertEquals(Calculation.discount(t.getTestSalary()),t.getExpectedDiscount(),"Тест не пройден");
+    /**
+     *
+     * @param salary
+     * @param expectedDiscount
+     */
+    @Test(groups = { "group-one" },
+            dataProvider = "CandidateDiscountLD",dataProviderClass = TestCalculatorLocalesData.class)
+    public void testCalculationDiscount(double salary, double expectedDiscount)  {
+
+        System.out.printf("//Исходные данные: %.2f || Ожидаемый результат: %.0f%n",
+                    salary, expectedDiscount);
+        try {
+                Assert.assertEquals(Calculation.discount(salary),expectedDiscount,"Тест не пройден");
+        } catch (MyException e) {
+            System.out.println("Тест не пройден! "+e.toString());
         }
+        System.out.println("Тест пройден успешно!");
+    }
 
-        System.out.printf("%.2f\n",Calculation.countTicketPrice(101, 200));
-        System.out.printf("%.2f\n",Calculation.countTicketPrice(101, 0.005));
-        System.out.printf("%.2f\n",Calculation.countTicketPrice(-101, 10));
-        System.out.printf("%.2f\n",Calculation.countTicketPrice(101, -10));
+    /**
+     *
+     * @param salary
+     * @param expectedDiscount
+     * @throws MyException
+     */
+    @Test(groups = { "group-one" },expectedExceptions = MyException.class,
+            dataProvider = "NegativeCalculatorDiscountLD",dataProviderClass = TestCalculatorLocalesData.class)
+    public void negativeTestCalculationDiscount(double salary, double expectedDiscount) throws MyException {
+        System.out.printf("//Исходные данные: %.2f || Ожидаемый результат: %.0f%n",
+                salary, expectedDiscount);
+        Assert.assertEquals(Calculation.discount(salary),expectedDiscount,"Тест не пройден!");
+        System.out.println("Тест пройден успешно!");
+    }
 
-        Assert.assertNotEquals(Calculation.countTicketPrice(101, -10), 111.00, 0.00, "Метод принемает отрецательную скидку!");
+    /**
+     *
+     * @param ticketPrice
+     * @param discount
+     * @param expectedResultPrice
+     * @throws MyException
+     */
+    @Test(dataProvider = "CalculatorCountTicketPriceLD",dataProviderClass = TestCalculatorLocalesData.class)
+    public void TestCalculationCountTicketPrice(int ticketPrice, double discount, double expectedResultPrice) {
+        System.out.printf("//Исходные данные: %d, %.0f%% || Ожидаемый результат: %.0f%n ",
+                ticketPrice, discount,expectedResultPrice);
+        try {
+            Assert.assertEquals(Calculation.countTicketPrice(ticketPrice, discount), expectedResultPrice,"Тест не пройден!");
+        } catch (MyException e) {
+            System.out.println("Тест не пройден! "+e.toString());
+        }
+        System.out.println("Тест пройден успешно!");
+    }
+
+    /**
+     *
+     * @param ticketPrice
+     * @param discount
+     * @param expectedResultPrice
+     * @throws MyException
+     */
+    @Test(expectedExceptions = MyException.class,
+            dataProvider = "NegativeCalculatorCountTicketPriceLD",dataProviderClass = TestCalculatorLocalesData.class)
+    public void negativeTestCalculationCountTicketPrice(int ticketPrice, double discount, double expectedResultPrice) throws MyException {
+        System.out.printf("//Исходные данные: %d, %.0f%% ",
+                ticketPrice, discount);
+        Assert.assertNotEquals(Calculation.countTicketPrice(ticketPrice, discount), expectedResultPrice);
     }
 }

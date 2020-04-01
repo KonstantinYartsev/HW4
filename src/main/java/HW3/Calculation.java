@@ -38,8 +38,15 @@ public class Calculation {
      * @param discount - скидка
      * @return стоимость билета со скидкой
      */
-    public static double countTicketPrice(int ticketPrice, double discount){
-        return ticketPrice - discount;
+    public static double countTicketPrice(int ticketPrice, double discount) throws MyException {
+        double maxDiscount = 45;
+        if(discount > maxDiscount || discount < 0){
+            throw new MyException ("Переданна неверная скидка!");
+        }
+        if(ticketPrice < 0){
+            throw  new MyException("Передана отрицательная цена!");
+        }
+        return ticketPrice - ticketPrice*(discount/100);
     }
     // Метод должен корректно считать окончательную стоимость билета
 }

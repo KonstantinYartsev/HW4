@@ -27,13 +27,14 @@ public class EmployeeCard {
     private boolean isWoman;
 
     public EmployeeCard(String name, int age, double effective, boolean isWoman) {
-        name = name;
-        age = age;
-        effective = effective;
-        isWoman = isWoman;
+        this.name = name;
+        this.age = age;
+        this.effective = effective;
+        this.salary = effective/10;
+        this.isWoman = isWoman;
     }
 
-     public EmployeeCard(String name, double effective, double salary, boolean isWoman) {
+     public EmployeeCard(String name, int age, double effective, double salary, boolean isWoman) {
         this.name = name;
         this.age = age;
         this.salary = salary;
@@ -49,13 +50,15 @@ public class EmployeeCard {
     @Override
     public String toString() {
         String sex;
-        if (isWoman = true) {
+        if (this.isWoman == true) {
             sex = "Женский";
         } else {
             sex = "Мужской";
         }
-        return "Имя работника - " + name + ". Его возраст - " + age + " лет. Его зарплата - " + salary + " в час. Пол - " + sex;
+        return "Имя работника - " + name + ". Его возраст - " + age + " лет. Его зарплата - " + salary + " в час. Пол - " + sex + ".";
     }
+
+
     // Вывести несколько сотрудников с разнымии параметрами.
     // Используйте метод toString для вывода информации о работнике.
     // Пример: Имя работника - Антон. Его возраст - 28 лет. Его зарплата - 15.5 в час. Пол - мужской.
