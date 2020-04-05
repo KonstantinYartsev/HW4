@@ -5,11 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestCalculation {
-    /**
-     *
-     * @param salary
-     * @param expectedDiscount
-     */
     @Test(groups = { "group-one" },
             dataProvider = "CandidateDiscountLD",dataProviderClass = TestCalculatorLocalesData.class)
     public void testCalculationDiscount(double salary, double expectedDiscount)  {
@@ -24,12 +19,6 @@ public class TestCalculation {
         System.out.println("Тест пройден успешно!");
     }
 
-    /**
-     *
-     * @param salary
-     * @param expectedDiscount
-     * @throws MyException
-     */
     @Test(groups = { "group-one" },expectedExceptions = MyException.class,
             dataProvider = "NegativeCalculatorDiscountLD",dataProviderClass = TestCalculatorLocalesData.class)
     public void negativeTestCalculationDiscount(double salary, double expectedDiscount) throws MyException {
@@ -39,13 +28,6 @@ public class TestCalculation {
         System.out.println("Тест пройден успешно!");
     }
 
-    /**
-     *
-     * @param ticketPrice
-     * @param discount
-     * @param expectedResultPrice
-     * @throws MyException
-     */
     @Test(dataProvider = "CalculatorCountTicketPriceLD",dataProviderClass = TestCalculatorLocalesData.class)
     public void TestCalculationCountTicketPrice(int ticketPrice, double discount, double expectedResultPrice) {
         System.out.printf("//Исходные данные: %d, %.0f%% || Ожидаемый результат: %.0f%n ",
@@ -58,13 +40,6 @@ public class TestCalculation {
         System.out.println("Тест пройден успешно!");
     }
 
-    /**
-     *
-     * @param ticketPrice
-     * @param discount
-     * @param expectedResultPrice
-     * @throws MyException
-     */
     @Test(expectedExceptions = MyException.class,
             dataProvider = "NegativeCalculatorCountTicketPriceLD",dataProviderClass = TestCalculatorLocalesData.class)
     public void negativeTestCalculationCountTicketPrice(int ticketPrice, double discount, double expectedResultPrice) throws MyException {
